@@ -18,16 +18,9 @@ public class FeedbackConfiguration : IEntityTypeConfiguration<Feedback>
             .IsRequired();
         builder.Property(e => e.EmployeeRating)
             .IsRequired();
-        builder.HasOne(e => e.Car)
-            .WithMany()
-            .HasForeignKey(e => e.CarId)
-            .HasPrincipalKey(e => e.Id)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(e => e.Employee)
-            .WithMany()
-            .HasForeignKey(e => e.EmployeeId)
-            .HasPrincipalKey(e => e.Id)
+        builder.HasOne(e => e.Reservation)
+            .WithOne()
+            .HasForeignKey<Feedback>(e => e.ReservationId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
         builder.Property(e => e.CreatedAt)
