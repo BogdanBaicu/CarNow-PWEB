@@ -20,6 +20,10 @@ public class InsuranceConfiguration : IEntityTypeConfiguration<Insurance>
         builder.Property(e => e.InsuranceCompany)
             .HasMaxLength(50)
             .IsRequired();
+        builder.Property(e => e.PolicyNumber)
+            .HasMaxLength(50)
+            .IsRequired();
+        builder.HasAlternateKey(e => e.PolicyNumber);
         builder.Property(e => e.CreatedAt)
             .IsRequired();
         builder.Property(e => e.UpdatedAt)
