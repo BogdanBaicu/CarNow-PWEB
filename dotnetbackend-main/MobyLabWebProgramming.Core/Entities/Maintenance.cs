@@ -6,4 +6,9 @@ public class Maintenance : BaseEntity
     public string Description { get; set; } = default!;
     public decimal Price { get; set; } = default!;
     public string ServiceName { get; set; } = default!;
+
+
+
+    public Guid CarId { get; set; }
+    public Car Car { get; set; } = default!;
 }

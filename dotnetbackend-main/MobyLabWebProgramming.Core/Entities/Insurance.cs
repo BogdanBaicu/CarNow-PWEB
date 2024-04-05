@@ -7,4 +7,9 @@ public class Insurance : BaseEntity
     public string PolicyNumber { get; set; } = default!;
     public string InsuranceCompany { get; set; } = default!;
     public decimal Price { get; set; } = default!;
+
+
+
+    public Guid CarId { get; set; }
+    public Car Car { get; set; } = default!;
 }
