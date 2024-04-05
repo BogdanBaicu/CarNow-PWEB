@@ -12,10 +12,10 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
             .IsRequired();
         builder.HasKey(x => x.Id);
         builder.Property(e => e.Brand)
-            .HasMaxLength(50)
+            .HasMaxLength(20)
             .IsRequired();
         builder.Property(e => e.Model)
-            .HasMaxLength(50)
+            .HasMaxLength(20)
             .IsRequired();
         builder.Property(e => e.LicensePlate)
             .HasMaxLength(10)

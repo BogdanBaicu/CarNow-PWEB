@@ -19,5 +19,4 @@ public class Car : BaseEntity
     public string ImageUrl { get; set; } = default!;
     public ICollection<Insurance> Insurance { get; set; } = default!;
     public ICollection<Maintenance> Maintenance { get; set; } = default!;
-
 }
