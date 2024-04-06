@@ -17,5 +17,7 @@ public enum ErrorCodes
     CannotAdd,
     CannotUpdate,
     CannotDelete,
-    MailSendFailed
+    MailSendFailed,
+    InsuranceAlreadyExists,
+    InvalidSearchQuery,
 }
