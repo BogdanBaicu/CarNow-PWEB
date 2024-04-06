@@ -59,9 +59,9 @@ public class InsuranceService : IInsuranceService
         return ServiceResponse.ForSuccess();
     }
 
-    public async Task<ServiceResponse> UpdateInsurance(InsuranceUpdateDTO insuranceUpdateDTO, UserDTO requestingtUser, CancellationToken cancellationToken = default)
+    public async Task<ServiceResponse> UpdateInsurance(InsuranceUpdateDTO insuranceUpdateDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingtUser.Role != UserRoleEnum.Admin || requestingtUser.Role != UserRoleEnum.Personnel)
+        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
             return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
         }
