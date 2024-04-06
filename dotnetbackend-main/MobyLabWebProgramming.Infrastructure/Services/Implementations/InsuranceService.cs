@@ -16,11 +16,13 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations;
 public class InsuranceService : IInsuranceService
 {
     private readonly IRepository<WebAppDatabaseContext> _repository;
+    private readonly IUserService _userService;
 
 
     public InsuranceService(IRepository<WebAppDatabaseContext> repository, IUserService userService)
     {
         _repository = repository;
+        _userService = userService;
     }
 
     public async Task<ServiceResponse> AddInsurance(InsuranceAddDTO insuranceAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)

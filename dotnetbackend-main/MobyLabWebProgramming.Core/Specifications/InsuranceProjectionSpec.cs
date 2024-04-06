@@ -17,6 +17,7 @@ public sealed class InsuranceProjectionSpec : BaseSpec<InsuranceProjectionSpec, 
         PolicyNumber = e.PolicyNumber,
         InsuranceCompany = e.InsuranceCompany,
         Price = e.Price,
+        CarId = e.CarId,
         Car = new()
         {
             Id = e.Car.Id,

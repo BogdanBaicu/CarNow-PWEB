@@ -6,4 +6,5 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Interfaces;
 
 public interface ICarService
 {
+    public Task<ServiceResponse> AddCar(CarAddDTO carAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default);
 }

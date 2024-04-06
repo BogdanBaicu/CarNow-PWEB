@@ -20,4 +20,5 @@ public enum ErrorCodes
     MailSendFailed,
     InsuranceAlreadyExists,
     InvalidSearchQuery,
+    CarAlreadyExists,
 }

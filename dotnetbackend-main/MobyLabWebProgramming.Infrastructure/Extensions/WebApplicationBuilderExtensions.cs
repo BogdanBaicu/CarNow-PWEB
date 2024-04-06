@@ -173,7 +173,9 @@ public static class WebApplicationBuilderExtensions
             .AddTransient<ILoginService, LoginService>()
             .AddTransient<IFileRepository, FileRepository>()
             .AddTransient<IUserFileService, UserFileService>()
-            .AddTransient<IMailService, MailService>();
+            .AddTransient<IMailService, MailService>()
+            .AddTransient<IInsuranceService, InsuranceService>()
+            .AddTransient<ICarService, CarService>();
 
         return builder;
     }
