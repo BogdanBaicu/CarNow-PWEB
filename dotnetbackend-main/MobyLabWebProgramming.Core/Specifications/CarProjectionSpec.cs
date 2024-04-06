@@ -25,6 +25,27 @@ public sealed class CarProjectionSpec : BaseSpec<CarProjectionSpec, Car, CarDTO>
         FuelType = e.FuelType,
         BodyType = e.BodyType,
         ImageUrl = e.ImageUrl,
+        Insurance = (ICollection<Insurance>)e.Insurance.Select(i => new InsuranceDTO
+        {
+            Id = i.Id,
+            StartDate = i.StartDate,
+            EndDate = i.EndDate,
+            Price = i.Price,
+            PolicyNumber = i.PolicyNumber,
+            InsuranceCompany = i.InsuranceCompany,
+            CreatedAt = i.CreatedAt,
+            UpdatedAt = i.UpdatedAt
+        }),
+        Maintenance = (ICollection<Maintenance>)e.Maintenance.Select(m => new MaintenanceDTO
+        {
+            Id = m.Id,
+            MaintenanceDate = m.MaintenanceDate,
+            Price = m.Price,
+            Description = m.Description,
+            ServiceName = m.ServiceName,
+            CreatedAt = m.CreatedAt,
+            UpdatedAt = m.UpdatedAt
+        }),
         CreatedAt = e.CreatedAt,
         UpdatedAt = e.UpdatedAt
     };

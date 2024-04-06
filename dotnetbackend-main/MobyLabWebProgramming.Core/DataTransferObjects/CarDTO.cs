@@ -19,6 +19,8 @@ public class CarDTO
     public string FuelType { get; set; } = default!;
     public string BodyType { get; set; } = default!;
     public string ImageUrl { get; set; } = default!;
+    public ICollection<Insurance> Insurance { get; set; } = new List<Insurance>();
+    public ICollection<Maintenance> Maintenance { get; set; } = new List<Maintenance>();
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

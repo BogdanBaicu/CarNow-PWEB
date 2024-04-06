@@ -56,6 +56,8 @@ public class CarService : ICarService
             EngineCC = carAddDTO.EngineCC,
             PowerHP = carAddDTO.PowerHP,
             Price = carAddDTO.Price,
+            Insurance = new List<Insurance>(),
+            Maintenance = new List<Maintenance>(),
             FuelType = carAddDTO.FuelType,
             BodyType = carAddDTO.BodyType,
             ImageUrl = carAddDTO.ImageUrl,

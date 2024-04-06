@@ -76,4 +76,14 @@ public class CarController : AuthorizedController
            this.ErrorMessageResult<PagedResponse<CarDTO>>(currentUser.Error);
     }
 
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<RequestResponse<PagedResponse<CarDTO>>>> GetCarsByDetails([FromQuery] PaginationSearchQueryParams pagination)
+    {
+        var currentUser = await GetCurrentUser();
+        return currentUser.Result != null ?
+            this.FromServiceResponse(await _carService.GetCarsByDetails(pagination)) :
+            this.ErrorMessageResult<PagedResponse<CarDTO>>(currentUser.Error);
+    }
+
 }
