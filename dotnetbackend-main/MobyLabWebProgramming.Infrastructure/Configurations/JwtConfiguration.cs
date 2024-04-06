@@ -17,4 +17,6 @@ public class JwtConfiguration
     /// The audience is who consumes the JWT, usually it is the client application, it should be a URL.
     /// </summary>
     public string Audience { get; set; } = default!;
+
+    
 }
