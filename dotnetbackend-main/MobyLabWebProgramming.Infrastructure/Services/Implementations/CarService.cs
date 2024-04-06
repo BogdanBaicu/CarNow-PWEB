@@ -26,10 +26,10 @@ public class CarService : ICarService
 
     public async Task<ServiceResponse> AddCar(CarAddDTO carAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        //{
-        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add cars", ErrorCodes.CannotAdd));
-        //}
+        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        {
+            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add cars", ErrorCodes.CannotAdd));
+        }
 
         var result = await _repository.GetAsync(new CarSpec(carAddDTO.VIN), cancellationToken);
 
