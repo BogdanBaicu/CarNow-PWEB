@@ -12,4 +12,6 @@ public class Reservation : BaseEntity
     public Guid CarId { get; set; } = default!;
     public User Employee { get; set; } = default!;
     public Guid EmployeeId { get; set; } = default!;
+    public User Customer { get; set; } = default!;
+    public Guid CustomerId { get; set; } = default!;
 }

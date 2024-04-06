@@ -31,6 +31,12 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
             .HasPrincipalKey(e => e.Id)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(e => e.Customer)
+            .WithMany()
+            .HasForeignKey(e => e.CustomerId)
+            .HasPrincipalKey(e => e.Id)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
         builder.Property(e => e.CreatedAt)
             .IsRequired();
         builder.Property(e => e.UpdatedAt)
