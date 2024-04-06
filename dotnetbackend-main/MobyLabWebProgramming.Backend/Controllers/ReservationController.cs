@@ -68,4 +68,14 @@ public class ReservationController : AuthorizedController
            this.ErrorMessageResult<PagedResponse<ReservationDTO>>(currentUser.Error);
     }
 
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<RequestResponse<PagedResponse<ReservationDTO>>>> GetReservationsByDetails([FromQuery] PaginationSearchQueryParams pagination)
+    {
+        var currentUser = await GetCurrentUser();
+        return currentUser.Result != null ?
+            this.FromServiceResponse(await _reservationService.GetReservationsByDetails(pagination)) :
+            this.ErrorMessageResult<PagedResponse<ReservationDTO>>(currentUser.Error);
+    }
+
 }
