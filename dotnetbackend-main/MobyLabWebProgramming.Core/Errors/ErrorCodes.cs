@@ -21,4 +21,5 @@ public enum ErrorCodes
     InsuranceAlreadyExists,
     InvalidSearchQuery,
     CarAlreadyExists,
+    InvalidDateRange,
 }

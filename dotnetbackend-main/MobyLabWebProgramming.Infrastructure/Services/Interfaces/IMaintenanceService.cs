@@ -13,4 +13,5 @@ public interface IMaintenanceService
     public Task<ServiceResponse<PagedResponse<MaintenanceDTO>>> GetMaintenances(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
     public Task<ServiceResponse<PagedResponse<MaintenanceDTO>>> GetMaintenancesByCarId(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
     public Task<ServiceResponse<PagedResponse<MaintenanceDTO>>> GetMaintenancesByDetails(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
+    Task GetMaintenancesByCarId(Guid carId, CancellationToken cancellationToken);
 }

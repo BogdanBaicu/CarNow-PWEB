@@ -31,26 +31,31 @@ public class RequestService : IRequestService
         _carService = carService;
     }
 
-    public async Task<ServiceResponse> AddRequest(RequestAddDTO RequestAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
+    public async Task<ServiceResponse> AddRequest(RequestAddDTO requestAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        var car = await _repository.GetAsync<Car>(RequestAddDTO.CarId, cancellationToken);
+        var car = await _repository.GetAsync<Car>(requestAddDTO.CarId, cancellationToken);
         if (car == null)
         {
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
         }
         
-        var customer = await _repository.GetAsync<User>(RequestAddDTO.CustomerId, cancellationToken);
+        var customer = await _repository.GetAsync<User>(requestAddDTO.CustomerId, cancellationToken);
         if (customer == null)
         {
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Customer not found", ErrorCodes.EntityNotFound));
         }
 
+        if (requestAddDTO.StartDate >= requestAddDTO.EndDate)
+        {
+            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Start date must be before end date", ErrorCodes.InvalidDateRange));
+        }
+
         await _repository.AddAsync(new Request
         {
-            Status = RequestAddDTO.Status,
-            StartDate = RequestAddDTO.StartDate,
-            EndDate = RequestAddDTO.EndDate,
-            Price = RequestAddDTO.Price,
+            Status = requestAddDTO.Status,
+            StartDate = requestAddDTO.StartDate,
+            EndDate = requestAddDTO.EndDate,
+            Price = car.Price * ( requestAddDTO.EndDate.DayNumber - requestAddDTO.StartDate.DayNumber + 1),
             Car = car,
             Customer = customer
         }, cancellationToken);
@@ -58,34 +63,34 @@ public class RequestService : IRequestService
         return ServiceResponse.ForSuccess();
     }
 
-    public async Task<ServiceResponse> UpdateRequest(RequestUpdateDTO RequestUpdateDTO, UserDTO requestingtUser, CancellationToken cancellationToken = default)
+    public async Task<ServiceResponse> UpdateRequest(RequestUpdateDTO requestUpdateDTO, UserDTO requestingtUser, CancellationToken cancellationToken = default)
     {
-        var Request = await _repository.GetAsync<Request>(RequestUpdateDTO.Id, cancellationToken);
+        var request = await _repository.GetAsync<Request>(requestUpdateDTO.Id, cancellationToken);
 
-        if (Request == null)
+        if (request == null)
         {
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Request not found", ErrorCodes.EntityNotFound));
         }
 
-        Request.Status = RequestUpdateDTO.Status ?? Request.Status;
+        request.Status = requestUpdateDTO.Status ?? request.Status;
 
-        await _repository.UpdateAsync(Request, cancellationToken);
+        await _repository.UpdateAsync(request, cancellationToken);
 
         return ServiceResponse.ForSuccess();
     }
 
     public async Task<ServiceResponse<RequestDTO>> GetRequest(Guid id, CancellationToken cancellationToken = default)
     {
-        var Request = await _repository.GetAsync(new RequestProjectionSpec(id, "Request"), cancellationToken);
-        return Request != null ? ServiceResponse<RequestDTO>.ForSuccess(Request)
+        var request = await _repository.GetAsync(new RequestProjectionSpec(id, "Request"), cancellationToken);
+        return request != null ? ServiceResponse<RequestDTO>.ForSuccess(request)
             : ServiceResponse<RequestDTO>.FromError(new(HttpStatusCode.NotFound, "Request not found", ErrorCodes.EntityNotFound));
     }
 
     public async Task<ServiceResponse<PagedResponse<RequestDTO>>> GetRequests(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default)
     {
-        var Requests = await _repository.PageAsync(pagination, new RequestProjectionSpec(pagination.Search), cancellationToken);
+        var requests = await _repository.PageAsync(pagination, new RequestProjectionSpec(pagination.Search), cancellationToken);
 
-        return ServiceResponse<PagedResponse<RequestDTO>>.ForSuccess(Requests);
+        return ServiceResponse<PagedResponse<RequestDTO>>.ForSuccess(requests);
     }
 
     public async Task<ServiceResponse<PagedResponse<RequestDTO>>> GetRequestsByDetails(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default)

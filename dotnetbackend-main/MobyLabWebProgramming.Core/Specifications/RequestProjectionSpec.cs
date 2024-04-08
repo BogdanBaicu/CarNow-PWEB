@@ -28,6 +28,10 @@ public sealed class RequestProjectionSpec : BaseSpec<RequestProjectionSpec, Requ
         {
             Query.Where(e => e.Id == id);
         }
+        if (search == "Car")
+        {
+            Query.Where(e => e.Car.Id == id);
+        }
     }
 
     public RequestProjectionSpec(string? search)
@@ -40,20 +44,16 @@ public sealed class RequestProjectionSpec : BaseSpec<RequestProjectionSpec, Requ
         }
 
         var searchExpr = $"%{search.Replace(" ", "%")}%";
-
-        // add where query to search by status, start date, end date, price, car brand, car model, car license plate, car trasmission, car body type, car fuel type, car color, employee name, customer name
-
-        Query.Where(e => EF.Functions.Like(e.Status.ToString(), searchExpr) ||
-                                EF.Functions.Like(e.StartDate.ToString(), searchExpr) ||
-                                                        EF.Functions.Like(e.EndDate.ToString(), searchExpr) ||
-                                                                                EF.Functions.Like(e.Price.ToString(), searchExpr) ||
-                                                                                                        EF.Functions.Like(e.Car.Brand, searchExpr) ||
-                                                                                                                                EF.Functions.Like(e.Car.Model, searchExpr) ||
-                                                                                                                                                        EF.Functions.Like(e.Car.LicensePlate, searchExpr) ||
-                                                                                                                                                                                EF.Functions.Like(e.Car.Transmission, searchExpr) ||
-                                                                                                                                                                                                        EF.Functions.Like(e.Car.BodyType, searchExpr) ||
-                                                                                                                                                                                                                                EF.Functions.Like(e.Car.FuelType, searchExpr) ||
-                                                                                                                                                                                                                                                        EF.Functions.Like(e.Car.Color, searchExpr) ||
-                                                                                                                                                                                                                                                                               EF.Functions.Like(e.Customer.Name, searchExpr));
+        
+        Query.Where(e => EF.Functions.Like(e.Status, searchExpr) ||
+                 EF.Functions.Like(e.Price.ToString(), searchExpr) ||
+                 EF.Functions.Like(e.Car.Brand, searchExpr) ||
+                 EF.Functions.Like(e.Car.Model, searchExpr) ||
+                 EF.Functions.Like(e.Car.LicensePlate, searchExpr) ||
+                 EF.Functions.Like(e.Car.Transmission, searchExpr) ||
+                 EF.Functions.Like(e.Car.BodyType, searchExpr) ||
+                 EF.Functions.Like(e.Car.FuelType, searchExpr) ||
+                 EF.Functions.Like(e.Car.Color, searchExpr) ||
+                 EF.Functions.Like(e.Customer.Name, searchExpr));
     }
 }

@@ -46,6 +46,11 @@ public class InsuranceService : IInsuranceService
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Insurance with the same policy number already exists", ErrorCodes.InsuranceAlreadyExists));
         }
 
+        if (insuranceAddDTO.StartDate >= insuranceAddDTO.EndDate)
+        {
+            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Start date must be before end date", ErrorCodes.InvalidDateRange));
+        }
+
         await _repository.AddAsync(new Insurance
         {
             StartDate = insuranceAddDTO.StartDate,
