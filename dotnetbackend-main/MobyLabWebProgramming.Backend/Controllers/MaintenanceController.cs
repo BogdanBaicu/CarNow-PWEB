@@ -81,4 +81,14 @@ public class MaintenanceController : AuthorizedController
             this.FromServiceResponse(await _maintenanceService.GetMaintenancesByCarId(pagination)) :
             this.ErrorMessageResult<PagedResponse<MaintenanceDTO>>(currentUser.Error);
     }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<RequestResponse<PagedResponse<MaintenanceDTO>>>> GetPageByDetails([FromQuery] PaginationSearchQueryParams pagination)
+    {
+        var currentUser = await GetCurrentUser();
+        return currentUser.Result != null ?
+            this.FromServiceResponse(await _maintenanceService.GetMaintenancesByDetails(pagination)) :
+            this.ErrorMessageResult<PagedResponse<MaintenanceDTO>>(currentUser.Error);
+    }
 }

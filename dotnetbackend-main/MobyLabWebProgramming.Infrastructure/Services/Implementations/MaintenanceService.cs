@@ -122,4 +122,16 @@ public class MaintenanceService : IMaintenanceService
 
         return ServiceResponse<PagedResponse<MaintenanceDTO>>.ForSuccess(maintenances);
     }
+
+    public async Task<ServiceResponse<PagedResponse<MaintenanceDTO>>> GetMaintenancesByDetails(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default)
+    {
+        if (pagination.Search == null)
+        {
+            return ServiceResponse<PagedResponse<MaintenanceDTO>>.FromError(new(HttpStatusCode.BadRequest, "Invalid search query", ErrorCodes.InvalidSearchQuery));
+        }
+
+        var maintenances = await _repository.PageAsync(pagination, new MaintenanceProjectionSpec(pagination.Search), cancellationToken);
+
+        return ServiceResponse<PagedResponse<MaintenanceDTO>>.ForSuccess(maintenances);
+    }
 }
