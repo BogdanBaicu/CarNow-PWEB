@@ -12,4 +12,5 @@ public interface IInsuranceService
     public Task<ServiceResponse<InsuranceDTO>> GetInsurance(Guid id, CancellationToken cancellationToken = default);
     public Task<ServiceResponse<PagedResponse<InsuranceDTO>>> GetInsurances(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
     public Task<ServiceResponse<PagedResponse<InsuranceDTO>>> GetInsurancesByCarId(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
+    public Task<ServiceResponse<PagedResponse<InsuranceDTO>>> GetInsurancesByDetails(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
 }

@@ -75,7 +75,6 @@ public class InsuranceService : IInsuranceService
 
         insurance.StartDate = insuranceUpdateDTO.StartDate ?? insurance.StartDate;
         insurance.EndDate = insuranceUpdateDTO.EndDate ?? insurance.EndDate;
-        insurance.PolicyNumber = insuranceUpdateDTO.PolicyNumber ?? insurance.PolicyNumber;
         insurance.InsuranceCompany = insuranceUpdateDTO.InsuranceCompany ?? insurance.InsuranceCompany;
         insurance.Price = insuranceUpdateDTO.Price ?? insurance.Price;
 
@@ -128,6 +127,18 @@ public class InsuranceService : IInsuranceService
         Guid guid = Guid.Parse(pagination.Search);
 
         var insurances = await _repository.PageAsync(pagination, new InsuranceProjectionSpec(guid, "Car"), cancellationToken);
+
+        return ServiceResponse<PagedResponse<InsuranceDTO>>.ForSuccess(insurances);
+    }
+
+    public async Task<ServiceResponse<PagedResponse<InsuranceDTO>>> GetInsurancesByDetails(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default)
+    {
+        if (pagination.Search == null)
+        {
+            return ServiceResponse<PagedResponse<InsuranceDTO>>.FromError(new(HttpStatusCode.BadRequest, "Invalid search query", ErrorCodes.InvalidSearchQuery));
+        }
+
+        var insurances = await _repository.PageAsync(pagination, new InsuranceProjectionSpec(pagination.Search), cancellationToken);
 
         return ServiceResponse<PagedResponse<InsuranceDTO>>.ForSuccess(insurances);
     }

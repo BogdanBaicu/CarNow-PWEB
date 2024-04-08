@@ -81,4 +81,14 @@ public class InsuranceController : AuthorizedController
             this.ErrorMessageResult<PagedResponse<InsuranceDTO>>(currentUser.Error);
     }
 
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<RequestResponse<PagedResponse<InsuranceDTO>>>> GetPageByDetails([FromQuery] PaginationSearchQueryParams pagination)
+    {
+        var currentUser = await GetCurrentUser();
+        return currentUser.Result != null ?
+            this.FromServiceResponse(await _insuranceService.GetInsurancesByDetails(pagination)) :
+            this.ErrorMessageResult<PagedResponse<InsuranceDTO>>(currentUser.Error);
+    }
+
 }
