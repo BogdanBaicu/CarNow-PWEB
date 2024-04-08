@@ -82,8 +82,6 @@ public class CarService : ICarService
 
         car.Brand = carUpdateDTO.Brand ?? car.Brand;
         car.Model = carUpdateDTO.Model ?? car.Model;
-        car.LicensePlate = carUpdateDTO.LicensePlate ?? car.LicensePlate;
-        car.VIN = carUpdateDTO.VIN ?? car.VIN;
         car.Year = carUpdateDTO.Year ?? car.Year;
         car.Color = carUpdateDTO.Color ?? car.Color;
         car.Transmission = carUpdateDTO.Transmission ?? car.Transmission;

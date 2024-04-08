@@ -25,7 +25,7 @@ public sealed class CarProjectionSpec : BaseSpec<CarProjectionSpec, Car, CarDTO>
         FuelType = e.FuelType,
         BodyType = e.BodyType,
         ImageUrl = e.ImageUrl,
-        Insurance = (ICollection<Insurance>)e.Insurance.Select(i => new InsuranceDTO
+        Insurance = (ICollection<Insurance>)e.Insurance.Select(i => new Insurance
         {
             Id = i.Id,
             StartDate = i.StartDate,
@@ -36,7 +36,7 @@ public sealed class CarProjectionSpec : BaseSpec<CarProjectionSpec, Car, CarDTO>
             CreatedAt = i.CreatedAt,
             UpdatedAt = i.UpdatedAt
         }),
-        Maintenance = (ICollection<Maintenance>)e.Maintenance.Select(m => new MaintenanceDTO
+        Maintenance = (ICollection<Maintenance>)e.Maintenance.Select(m => new Maintenance
         {
             Id = m.Id,
             MaintenanceDate = m.MaintenanceDate,
@@ -74,13 +74,14 @@ public sealed class CarProjectionSpec : BaseSpec<CarProjectionSpec, Car, CarDTO>
                                                               EF.Functions.Like(e.LicensePlate, searchExpr) ||
                                                                                          EF.Functions.Like(e.VIN, searchExpr) ||
                                                                                                                     EF.Functions.Like(e.Color, searchExpr) ||
-                                                                                                                                               EF.Functions.Like(e.FuelType.ToString(), searchExpr) ||
-                                                                                                                                                                          EF.Functions.Like(e.BodyType.ToString(), searchExpr) ||
-                                                                                                                                                                                                     EF.Functions.Like(e.Transmission.ToString(), searchExpr) ||
+                                                                                                                                               EF.Functions.Like(e.FuelType, searchExpr) ||
+                                                                                                                                                                          EF.Functions.Like(e.BodyType, searchExpr) ||
+                                                                                                                                                                                                     EF.Functions.Like(e.Transmission, searchExpr) ||
                                                                                                                                                                                                                                 EF.Functions.Like(e.EngineCC.ToString(), searchExpr) ||
                                                                                                                                                                                                                                                            EF.Functions.Like(e.PowerHP.ToString(), searchExpr) ||
                                                                                                                                                                                                                                                                                       EF.Functions.Like(e.Year.ToString(), searchExpr) ||
-                                                                                                                                                                                                                                                                                                                 EF.Functions.Like(e.Price.ToString(), searchExpr));
+                                                                                                                                                                                                                                                                                                                 EF.Functions.Like(e.Price.ToString(), searchExpr)
+                                                                                                                                                                                                                                                                                                                 );
     }
 }
 
