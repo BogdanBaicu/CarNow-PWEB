@@ -13,30 +13,17 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
         builder.HasKey(x => x.Id);
         builder.Property(e => e.Status)
             .IsRequired();
-        builder.Property(e => e.StartDate)
-            .IsRequired();
-        builder.Property(e => e.EndDate)
-            .IsRequired();
-        builder.Property(e => e.Price)
-            .IsRequired();
-        builder.HasOne(e => e.Car)
-            .WithMany()
-            .HasForeignKey(e => e.CarId)
-            .HasPrincipalKey(e => e.Id)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
         builder.HasOne(e => e.Employee)
             .WithMany()
             .HasForeignKey(e => e.EmployeeId)
             .HasPrincipalKey(e => e.Id)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(e => e.Customer)
-            .WithMany()
-            .HasForeignKey(e => e.CustomerId)
-            .HasPrincipalKey(e => e.Id)
+            .OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(e => e.Request)
+            .WithOne()
+            .HasForeignKey<Reservation>(e => e.RequestId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.CreatedAt)
             .IsRequired();
         builder.Property(e => e.UpdatedAt)

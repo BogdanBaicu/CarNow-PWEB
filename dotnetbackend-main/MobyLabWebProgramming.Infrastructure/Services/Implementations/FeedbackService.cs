@@ -44,6 +44,7 @@ public class FeedbackService : IFeedbackService
             Description = feedbackAddDTO.Description,
             CarRating = feedbackAddDTO.CarRating,
             EmployeeRating = feedbackAddDTO.EmployeeRating,
+            ReservationId = feedbackAddDTO.ReservationId
         }, cancellationToken);
 
         return ServiceResponse.ForSuccess();

@@ -64,7 +64,7 @@ public class FeedbackController : AuthorizedController
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<RequestResponse<PagedResponse<FeedbackDTO>>>> GetCarsByDetails([FromQuery] PaginationSearchQueryParams pagination)
+    public async Task<ActionResult<RequestResponse<PagedResponse<FeedbackDTO>>>> GetFeedbacksByDetails([FromQuery] PaginationSearchQueryParams pagination)
     {
         var currentUser = await GetCurrentUser();
         return currentUser.Result != null ?

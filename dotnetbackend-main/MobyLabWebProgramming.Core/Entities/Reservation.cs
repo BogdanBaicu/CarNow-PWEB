@@ -5,13 +5,8 @@ namespace MobyLabWebProgramming.Core.Entities;
 public class Reservation : BaseEntity
 {
     public ReservationStatusEnum Status { get; set; } = default!;
-    public DateOnly StartDate { get; set; } = default!;
-    public DateOnly EndDate { get; set; } = default!;
-    public decimal Price { get; set; } = default!;
-    public Car Car { get; set; } = default!;
-    public Guid CarId { get; set; } = default!;
     public User Employee { get; set; } = default!;
     public Guid EmployeeId { get; set; } = default!;
-    public User Customer { get; set; } = default!;
-    public Guid CustomerId { get; set; } = default!;
+    public Request Request { get; set; } = default!;
+    public Guid RequestId { get; set; } = default!;
 }

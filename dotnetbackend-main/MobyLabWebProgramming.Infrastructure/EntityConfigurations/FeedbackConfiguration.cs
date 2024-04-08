@@ -22,7 +22,7 @@ public class FeedbackConfiguration : IEntityTypeConfiguration<Feedback>
             .WithOne()
             .HasForeignKey<Feedback>(e => e.ReservationId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.CreatedAt)
             .IsRequired();
         builder.Property(e => e.UpdatedAt)

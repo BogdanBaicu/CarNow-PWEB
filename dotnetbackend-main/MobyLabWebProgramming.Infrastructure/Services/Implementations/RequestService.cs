@@ -45,7 +45,7 @@ public class RequestService : IRequestService
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Customer not found", ErrorCodes.EntityNotFound));
         }
 
-        if (requestAddDTO.StartDate >= requestAddDTO.EndDate)
+        if (requestAddDTO.StartDate > requestAddDTO.EndDate)
         {
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Start date must be before end date", ErrorCodes.InvalidDateRange));
         }

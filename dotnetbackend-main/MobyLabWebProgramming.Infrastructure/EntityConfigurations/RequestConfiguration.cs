@@ -24,13 +24,13 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
             .HasForeignKey(e => e.CarId)
             .HasPrincipalKey(e => e.Id)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
         builder.HasOne(e => e.Customer)
             .WithMany()
             .HasForeignKey(e => e.CustomerId)
             .HasPrincipalKey(e => e.Id)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.CreatedAt)
             .IsRequired();
         builder.Property(e => e.UpdatedAt)

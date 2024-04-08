@@ -32,6 +32,10 @@ public sealed class RequestProjectionSpec : BaseSpec<RequestProjectionSpec, Requ
         {
             Query.Where(e => e.Car.Id == id);
         }
+        if (search == "Customer")
+        {
+            Query.Where(e => e.Customer.Id == id);
+        }
     }
 
     public RequestProjectionSpec(string? search)

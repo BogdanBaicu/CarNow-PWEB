@@ -35,31 +35,23 @@ public class ReservationService : IReservationService
 
     public async Task<ServiceResponse> AddReservation(ReservationAddDTO reservationAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        var car = await _repository.GetAsync<Car>(reservationAddDTO.CarId, cancellationToken);
-        if (car == null)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
-        }
         var employee = await _repository.GetAsync<User>(reservationAddDTO.EmployeeId, cancellationToken);
         if (employee == null)
         {
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Employee not found", ErrorCodes.EntityNotFound));
         }
-        var customer = await _repository.GetAsync<User>(reservationAddDTO.CustomerId, cancellationToken);
-        if (customer == null)
+        
+        var request = await _repository.GetAsync<Request>(reservationAddDTO.RequestId, cancellationToken);
+        if (request == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Customer not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Request not found", ErrorCodes.EntityNotFound));
         }
 
         await _repository.AddAsync(new Reservation
         {
             Status = reservationAddDTO.Status,
-            StartDate = reservationAddDTO.StartDate,
-            EndDate = reservationAddDTO.EndDate,
-            Price = reservationAddDTO.Price,
-            Car = car,
             Employee = employee,
-            Customer = customer
+            Request = request
         }, cancellationToken);
 
         return ServiceResponse.ForSuccess();

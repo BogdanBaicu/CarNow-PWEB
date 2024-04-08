@@ -26,6 +26,22 @@ public sealed class FeedbackProjectionSpec : BaseSpec<FeedbackProjectionSpec, Fe
         {
             Query.Where(e => e.Id == id);
         }
+        if (search == "Reservation")
+        {
+            Query.Where(e => e.Reservation.Id == id);
+        }
+        if (search == "Employee")
+        {
+            Query.Where(e => e.Reservation.Employee.Id == id);
+        }
+        if (search == "Car")
+        {
+            Query.Where(e => e.Reservation.Request.Car.Id == id);
+        }
+        if (search == "Customer")
+        {
+            Query.Where(e => e.Reservation.Request.Customer.Id == id);
+        }
     }
 
     public FeedbackProjectionSpec(string? search)
@@ -42,10 +58,10 @@ public sealed class FeedbackProjectionSpec : BaseSpec<FeedbackProjectionSpec, Fe
         // add where query to search by employee rating, car rating, and employee name of the reservation, car brand, car model, car license plate, car vin of the resrevation
         Query.Where(e => EF.Functions.Like(e.EmployeeRating.ToString(), searchExpr) ||
                                        EF.Functions.Like(e.CarRating.ToString(), searchExpr) ||
-                                                                                              EF.Functions.Like(e.Reservation.Car.Brand, searchExpr) ||
-                                                                                                                                                             EF.Functions.Like(e.Reservation.Car.Model, searchExpr) ||
-                                                                                                                                                                                                                                    EF.Functions.Like(e.Reservation.Car.LicensePlate, searchExpr) ||
-                                                                                                                                                                                                                                                                                                                   EF.Functions.Like(e.Reservation.Car.VIN, searchExpr) ||
+                                                                                              EF.Functions.Like(e.Reservation.Request.Car.Brand, searchExpr) ||
+                                                                                                                                                             EF.Functions.Like(e.Reservation.Request.Car.Model, searchExpr) ||
+                                                                                                                                                                                                                                    EF.Functions.Like(e.Reservation.Request.Car.LicensePlate, searchExpr) ||
+                                                                                                                                                                                                                                                                                                                   EF.Functions.Like(e.Reservation.Request.Car.VIN, searchExpr) ||
                                                                                                                                                                                                                                                                                                                                                                                                           EF.Functions.Like(e.Reservation.Employee.Name, searchExpr));
         
     }
