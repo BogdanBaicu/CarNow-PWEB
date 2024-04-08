@@ -20,14 +20,16 @@ public class FeedbackController : AuthorizedController
     private readonly IMaintenanceService _maintenanceService;
     private readonly IReservationService _reservationService;
     private readonly IFeedbackService _feedbackService;
+    private readonly IRequestService _requestService;
 
-    public FeedbackController(IUserService userService, ICarService carService, IInsuranceService insuranceService, IMaintenanceService maintenanceService, IReservationService reservationService, IFeedbackService feedbackService) : base(userService)
+    public FeedbackController(IUserService userService, ICarService carService, IInsuranceService insuranceService, IMaintenanceService maintenanceService, IReservationService reservationService, IFeedbackService feedbackService, IRequestService requestService) : base(userService)
     {
         _carService = carService;
         _insuranceService = insuranceService;
         _maintenanceService = maintenanceService;
         _reservationService = reservationService;
         _feedbackService = feedbackService;
+        _requestService = requestService;
     }
 
     [Authorize]

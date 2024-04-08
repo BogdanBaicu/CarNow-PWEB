@@ -2,7 +2,7 @@
 
 namespace MobyLabWebProgramming.Core.DataTransferObjects;
 
-public class ReservationAddDTO
+public class RequestAddDTO
 {
     public ReservationStatusEnum Status { get; set; } = ReservationStatusEnum.Pending;
     public DateOnly StartDate { get; set; } = default!;
@@ -10,5 +10,4 @@ public class ReservationAddDTO
     public decimal Price { get; set; } = default!;
     public Guid CarId { get; set; } = default!;
     public Guid CustomerId { get; set; } = default!;
-    public Guid EmployeeId { get; set; } = default!;
 }

@@ -20,14 +20,17 @@ public class ReservationService : IReservationService
     private readonly IMaintenanceService _maintenanceService;
     private readonly IInsuranceService _insuranceService;
     private readonly ICarService _carService;
+    private readonly IRequestService _requestService;
 
-    public ReservationService(IRepository<WebAppDatabaseContext> repository, IUserService userService, IMaintenanceService maintenanceService, IInsuranceService insuranceService, ICarService carService)
+    public ReservationService(IRepository<WebAppDatabaseContext> repository, IUserService userService, IMaintenanceService maintenanceService, IInsuranceService insuranceService, ICarService carService, IRequestService requestService)
     {
         _repository = repository;
         _userService = userService;
         _maintenanceService = maintenanceService;
         _insuranceService = insuranceService;
         _carService = carService;
+        _requestService = requestService;
+
     }
 
     public async Task<ServiceResponse> AddReservation(ReservationAddDTO reservationAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)

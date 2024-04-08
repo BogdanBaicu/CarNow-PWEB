@@ -19,13 +19,15 @@ public class ReservationController : AuthorizedController
     private readonly ICarService _carService;
     private readonly IInsuranceService _insuranceService;
     private readonly IMaintenanceService _maintenanceService;
+    private readonly IRequestService _requestService;
 
-    public ReservationController(IUserService userService, ICarService carService, IInsuranceService insuranceService, IMaintenanceService maintenanceService, IReservationService reservationService) : base(userService)
+    public ReservationController(IUserService userService, ICarService carService, IInsuranceService insuranceService, IMaintenanceService maintenanceService, IReservationService reservationService, IRequestService requestService) : base(userService)
     {
         _reservationService = reservationService;
         _carService = carService;
         _insuranceService = insuranceService;
         _maintenanceService = maintenanceService;
+        _requestService = requestService;
     }
 
     [Authorize]

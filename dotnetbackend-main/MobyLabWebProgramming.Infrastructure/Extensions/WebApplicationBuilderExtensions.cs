@@ -178,7 +178,8 @@ public static class WebApplicationBuilderExtensions
             .AddTransient<ICarService, CarService>()
             .AddTransient<IMaintenanceService, MaintenanceService>()
             .AddTransient<IReservationService, ReservationService>()
-            .AddTransient<IFeedbackService, FeedbackService>();
+            .AddTransient<IFeedbackService, FeedbackService>()
+            .AddTransient<IRequestService, RequestService>();
 
         return builder;
     }
