@@ -111,14 +111,14 @@ public class CarService : ICarService
             return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
         }
 
-         delete all insurances for the car
+         //delete all insurances for the car
         var insurances = await _repository.ListAsync(new InsuranceSpec(car.Id), cancellationToken);
         foreach (var insurance in insurances)
         {
             await _insuranceService.DeleteInsurance(insurance.Id, requestingUser, cancellationToken);
         }
 
-         delete all maintenances for the car
+         //delete all maintenances for the car
         var maintenances = await _repository.ListAsync(new MaintenanceSpec(car.Id), cancellationToken);
         foreach (var maintenance in maintenances)
         {
