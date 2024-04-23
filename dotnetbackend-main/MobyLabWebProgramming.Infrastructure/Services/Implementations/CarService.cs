@@ -32,10 +32,10 @@ public class CarService : ICarService
 
     public async Task<ServiceResponse> AddCar(CarAddDTO carAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add cars", ErrorCodes.CannotAdd));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add cars", ErrorCodes.CannotAdd));
+        //}
 
         var result = await _repository.GetAsync(new CarSpec(carAddDTO.VIN), cancellationToken);
 
@@ -68,10 +68,10 @@ public class CarService : ICarService
 
     public async Task<ServiceResponse> UpdateCar(CarUpdateDTO carUpdateDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
+        //}
 
         var car = await _repository.GetAsync<Car>(carUpdateDTO.Id, cancellationToken);
 
@@ -99,10 +99,10 @@ public class CarService : ICarService
 
     public async Task<ServiceResponse> DeleteCar(Guid id, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete cars", ErrorCodes.CannotDelete));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete cars", ErrorCodes.CannotDelete));
+        //}
 
         var car = await _repository.GetAsync<Car>(id, cancellationToken);
 

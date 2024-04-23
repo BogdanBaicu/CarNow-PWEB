@@ -27,10 +27,10 @@ public class InsuranceService : IInsuranceService
 
     public async Task<ServiceResponse> AddInsurance(InsuranceAddDTO insuranceAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add insurances", ErrorCodes.CannotAdd));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add insurances", ErrorCodes.CannotAdd));
+        //}
 
         var car = await _repository.GetAsync<Car>(insuranceAddDTO.CarId, cancellationToken);
 
@@ -66,10 +66,10 @@ public class InsuranceService : IInsuranceService
 
     public async Task<ServiceResponse> UpdateInsurance(InsuranceUpdateDTO insuranceUpdateDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
+        //}
 
         var insurance = await _repository.GetAsync<Insurance>(insuranceUpdateDTO.Id, cancellationToken);
 
@@ -90,10 +90,10 @@ public class InsuranceService : IInsuranceService
 
     public async Task<ServiceResponse> DeleteInsurance(Guid id, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete insurances", ErrorCodes.CannotDelete));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete insurances", ErrorCodes.CannotDelete));
+        //}
 
         var insurance = await _repository.GetAsync<Insurance>(id, cancellationToken);
 

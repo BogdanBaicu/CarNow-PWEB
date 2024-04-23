@@ -34,10 +34,10 @@ public class FeedbackService : IFeedbackService
 
     public async Task<ServiceResponse> AddFeedback(FeedbackAddDTO feedbackAddDTO, UserDTO requestingUser, CancellationToken cancellationToken)
     {
-        if (requestingUser.Role != UserRoleEnum.Client)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only clients can add feedback", ErrorCodes.CannotAdd));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Client)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only clients can add feedback", ErrorCodes.CannotAdd));
+        //}
 
         await _repository.AddAsync(new Feedback
         {

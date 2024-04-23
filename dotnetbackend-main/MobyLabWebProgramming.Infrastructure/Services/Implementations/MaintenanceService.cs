@@ -27,10 +27,10 @@ public class MaintenanceService : IMaintenanceService
 
     public async Task<ServiceResponse> AddMaintenance(MaintenanceAddDTO maintenanceAddDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add maintenances", ErrorCodes.CannotAdd));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add maintenances", ErrorCodes.CannotAdd));
+        //}
 
         var car = await _repository.GetAsync<Car>(maintenanceAddDTO.CarId, cancellationToken);
 
@@ -53,10 +53,10 @@ public class MaintenanceService : IMaintenanceService
 
     public async Task<ServiceResponse> UpdateMaintenance(MaintenanceUpdateDTO maintenanceUpdateDTO, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update maintenances", ErrorCodes.CannotUpdate));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update maintenances", ErrorCodes.CannotUpdate));
+        //}
 
         var maintenance = await _repository.GetAsync<Maintenance>(maintenanceUpdateDTO.Id, cancellationToken);
 
@@ -77,10 +77,10 @@ public class MaintenanceService : IMaintenanceService
 
     public async Task<ServiceResponse> DeleteMaintenance(Guid id, UserDTO requestingUser, CancellationToken cancellationToken = default)
     {
-        if (requestingUser.Role != UserRoleEnum.Admin)
-        {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete maintenances", ErrorCodes.CannotDelete));
-        }
+        //if (requestingUser.Role != UserRoleEnum.Admin)
+        //{
+        //    return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete maintenances", ErrorCodes.CannotDelete));
+        //}
 
         var maintenance = await _repository.GetAsync<Maintenance>(id, cancellationToken);
 
