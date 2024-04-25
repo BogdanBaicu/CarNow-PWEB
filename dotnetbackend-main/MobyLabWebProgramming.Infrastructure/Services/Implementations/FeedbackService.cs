@@ -36,7 +36,7 @@ public class FeedbackService : IFeedbackService
     {
         if (requestingUser.Role != UserRoleEnum.Client)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only clients can add feedback", ErrorCodes.CannotAdd));
+            return ServiceResponse.FromError(CommonErrors.FeedbackAddPermission);
         }
 
         await _repository.AddAsync(new Feedback

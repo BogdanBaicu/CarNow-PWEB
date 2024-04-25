@@ -10,6 +10,7 @@ using MobyLabWebProgramming.Core.Specifications;
 using MobyLabWebProgramming.Infrastructure.Database;
 using MobyLabWebProgramming.Infrastructure.Repositories.Interfaces;
 using MobyLabWebProgramming.Infrastructure.Services.Interfaces;
+using Org.BouncyCastle.Pqc.Crypto.Cmce;
 
 namespace MobyLabWebProgramming.Infrastructure.Services.Implementations;
 
@@ -29,14 +30,14 @@ public class MaintenanceService : IMaintenanceService
     {
         if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add maintenances", ErrorCodes.CannotAdd));
+            return ServiceResponse.FromError(CommonErrors.MaintenanceAddPermission);
         }
 
         var car = await _repository.GetAsync<Car>(maintenanceAddDTO.CarId, cancellationToken);
 
         if (car == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.MaintenanceAlreadyExists);
         }
 
         await _repository.AddAsync(new Maintenance
@@ -55,14 +56,14 @@ public class MaintenanceService : IMaintenanceService
     {
         if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update maintenances", ErrorCodes.CannotUpdate));
+            return ServiceResponse.FromError(CommonErrors.MaintenanceUpdatePermission);
         }
 
         var maintenance = await _repository.GetAsync<Maintenance>(maintenanceUpdateDTO.Id, cancellationToken);
 
         if (maintenance == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Maintenance not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.MaintenanceNotFound);
         }
 
         maintenance.MaintenanceDate = maintenanceUpdateDTO.MaintenanceDate ?? maintenance.MaintenanceDate;
@@ -79,14 +80,14 @@ public class MaintenanceService : IMaintenanceService
     {
         if (requestingUser.Role != UserRoleEnum.Admin)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete maintenances", ErrorCodes.CannotDelete));
+            return ServiceResponse.FromError(CommonErrors.MaintenanceDeletePermission);
         }
 
         var maintenance = await _repository.GetAsync<Maintenance>(id, cancellationToken);
 
         if (maintenance == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Maintenance not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.MaintenanceNotFound);
         }
 
         await _repository.DeleteAsync<Maintenance>(id, cancellationToken);

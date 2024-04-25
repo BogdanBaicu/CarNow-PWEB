@@ -34,14 +34,14 @@ public class CarService : ICarService
     {
         if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add cars", ErrorCodes.CannotAdd));
+            return ServiceResponse.FromError(CommonErrors.CarAddPermission);
         }
 
         var result = await _repository.GetAsync(new CarSpec(carAddDTO.VIN), cancellationToken);
 
         if (result != null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car with the same license plate already exists", ErrorCodes.CarAlreadyExists));
+            return ServiceResponse.FromError(CommonErrors.CarAlreadyExists);
         }
 
         await _repository.AddAsync(new Car
@@ -70,14 +70,14 @@ public class CarService : ICarService
     {
         if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
+            return ServiceResponse.FromError(CommonErrors.CarUpdatePermission);
         }
 
         var car = await _repository.GetAsync<Car>(carUpdateDTO.Id, cancellationToken);
 
         if (car == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.CarNotFound);
         }
 
         car.Brand = carUpdateDTO.Brand ?? car.Brand;
@@ -101,14 +101,14 @@ public class CarService : ICarService
     {
         if (requestingUser.Role != UserRoleEnum.Admin)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete cars", ErrorCodes.CannotDelete));
+            return ServiceResponse.FromError(CommonErrors.CarDeletePermission);
         }
 
         var car = await _repository.GetAsync<Car>(id, cancellationToken);
 
         if (car == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.CarNotFound);
         }
 
          //delete all insurances for the car

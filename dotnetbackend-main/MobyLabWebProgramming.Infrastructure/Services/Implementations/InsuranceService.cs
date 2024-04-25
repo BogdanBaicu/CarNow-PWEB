@@ -43,12 +43,12 @@ public class InsuranceService : IInsuranceService
 
         if (result != null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Insurance with the same policy number already exists", ErrorCodes.InsuranceAlreadyExists));
+            return ServiceResponse.FromError(CommonErrors.InsuranceAddPermission);
         }
 
         if (insuranceAddDTO.StartDate >= insuranceAddDTO.EndDate)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Start date must be before end date", ErrorCodes.InvalidDateRange));
+            return ServiceResponse.FromError(CommonErrors.InsuranceAlreadyExists);
         }
 
         await _repository.AddAsync(new Insurance
@@ -68,14 +68,14 @@ public class InsuranceService : IInsuranceService
     {
         if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can update insurances", ErrorCodes.CannotUpdate));
+            return ServiceResponse.FromError(CommonErrors.InsuranceUpdatePermission);
         }
 
         var insurance = await _repository.GetAsync<Insurance>(insuranceUpdateDTO.Id, cancellationToken);
 
         if (insurance == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Insurance not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.InsuranceNotFound);
         }
 
         insurance.StartDate = insuranceUpdateDTO.StartDate ?? insurance.StartDate;
@@ -92,14 +92,14 @@ public class InsuranceService : IInsuranceService
     {
         if (requestingUser.Role != UserRoleEnum.Admin)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins can delete insurances", ErrorCodes.CannotDelete));
+            return ServiceResponse.FromError(CommonErrors.InsuranceDeletePermission);
         }
 
         var insurance = await _repository.GetAsync<Insurance>(id, cancellationToken);
 
         if (insurance == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Insurance not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.InsuranceNotFound);
         }
 
         await _repository.DeleteAsync<Insurance>(id, cancellationToken);
