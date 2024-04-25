@@ -29,21 +29,21 @@ public class InsuranceService : IInsuranceService
     {
         if (requestingUser.Role != UserRoleEnum.Admin || requestingUser.Role != UserRoleEnum.Personnel)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.Forbidden, "Only admins and personnel can add insurances", ErrorCodes.CannotAdd));
+            return ServiceResponse.FromError(CommonErrors.InsuranceAddPermission);
         }
 
         var car = await _repository.GetAsync<Car>(insuranceAddDTO.CarId, cancellationToken);
 
         if (car == null)
         {
-            return ServiceResponse.FromError(new(HttpStatusCode.BadRequest, "Car not found", ErrorCodes.EntityNotFound));
+            return ServiceResponse.FromError(CommonErrors.CarNotFound);
         }
 
         var result = await _repository.GetAsync(new InsuranceSpec(insuranceAddDTO.PolicyNumber), cancellationToken);
 
         if (result != null)
         {
-            return ServiceResponse.FromError(CommonErrors.InsuranceAddPermission);
+            return ServiceResponse.FromError(CommonErrors.InsuranceAlreadyExists);
         }
 
         if (insuranceAddDTO.StartDate >= insuranceAddDTO.EndDate)

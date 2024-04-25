@@ -37,7 +37,7 @@ public class MaintenanceService : IMaintenanceService
 
         if (car == null)
         {
-            return ServiceResponse.FromError(CommonErrors.MaintenanceAlreadyExists);
+            return ServiceResponse.FromError(CommonErrors.CarNotFound);
         }
 
         await _repository.AddAsync(new Maintenance
